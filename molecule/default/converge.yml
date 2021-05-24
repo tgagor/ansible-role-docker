@@ -4,7 +4,7 @@
   tasks:
     - name: Include tgagor.docker role
       include_role:
-        name: docker
+        name: tgagor.docker
       vars:
         docker_remove_conflicting_packages: false
         docker_config:

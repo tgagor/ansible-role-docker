@@ -36,7 +36,3 @@ galaxy_info:
     - tgagor
     - developer
     - docker
-    - docker-ce
-
-# dependencies:
-  # - docker-compose
