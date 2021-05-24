@@ -17,20 +17,15 @@ galaxy_info:
       - bionic  # 18.04
       - focal   # 20.04
       - groovy  # 20.10
-      - hirsute # 21.04
+      # - hirsute # 21.04
   - name: Debian
     versions:
       - buster    # 10
       - bullseye  # 11
-  - name: CentOS
+  - name: EL
     versions:
       - 7
       - 8
-  - name: Fedora
-    versions:
-      - 32
-      - 33
-      - 34
 
   galaxy_tags:
     - tgagor
