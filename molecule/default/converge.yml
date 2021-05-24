@@ -1,0 +1,16 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: Include tgagor.docker role
+      include_role:
+        name: docker
+      vars:
+        docker_remove_conflicting_packages: false
+        docker_config:
+          experimental: false
+          features:
+            buildkit: true
+        docker_listen_ip: 0.0.0.0
+        docker_allowed_users:
+          - dude

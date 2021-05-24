@@ -1,0 +1,30 @@
+---
+docker_allowed_users: []
+docker_config:
+  experimental: false
+  features:
+    buildkit: true
+  # configure dns from consul
+  # dns:
+  #   - "{{ ansible_docker0.ipv4.address }}"
+  # dns-search:
+  #   - node.consul
+  # cluster-store: "consul://consul.service.consul:8500"
+  # cluster-advertise: "{{ ansible_default_ipv4.address }}:2375"
+  # cluster-store-opts:
+  #   -
+  # https://docs.docker.com/config/daemon/ipv6/
+  # ipv6: true
+  # fixed-cidr-v6: "2001:db8:1::/64"
+
+# change to 0.0.0.0 to allow accessing docker from other machines
+docker_listen_ip: 127.0.0.1
+docker_listen_port: 2375
+
+# if you want to fetch up to date repo file straight from Docker website,
+# set it to true, I'm not doing it by default to avoid external dependencies
+# during playbook runs
+docker_download_repo_for_rhel: false
+
+# uninstall older Docker packages
+docker_remove_conflicting_packages: true

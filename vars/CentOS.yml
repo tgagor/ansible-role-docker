@@ -1,0 +1,10 @@
+---
+
+docker_conflicting_packages:
+  - lxc
+  - lxd
+  - docker
+  - docker-engine
+  - docker.io
+  - containerd
+  - runc

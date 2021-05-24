@@ -1,0 +1,42 @@
+---
+galaxy_info:
+  role_name: docker
+  namespace: tgagor
+  author: Tomasz G.
+  description: installs Docker server
+  license: GPLv3
+
+  min_ansible_version: 1.2
+
+  # If this a Container Enabled role, provide the minimum Ansible Container version.
+  # min_ansible_container_version:
+
+  platforms:
+  - name: Ubuntu
+    versions:
+      - bionic  # 18.04
+      - focal   # 20.04
+      - groovy  # 20.10
+      - hirsute # 21.04
+  - name: Debian
+    versions:
+      - buster    # 10
+      - bullseye  # 11
+  - name: CentOS
+    versions:
+      - 7
+      - 8
+  - name: Fedora
+    versions:
+      - 32
+      - 33
+      - 34
+
+  galaxy_tags:
+    - tgagor
+    - developer
+    - docker
+    - docker-ce
+
+# dependencies:
+  # - docker-compose

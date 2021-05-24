@@ -1,0 +1,24 @@
+---
+
+- name: Import per OS variables
+  include_vars: vars-rhel.yml
+
+- name: Remove conflicting packages
+  package:
+    name: "{{ docker_conflicting_packages }}"
+    state: absent
+  when: docker_remove_conflicting_packages
+
+- name: Download Docker repository
+  get_url:
+    url: https://download.docker.com/linux/{{ ansible_distribution | lower }}/docker-ce.repo
+    dest: /etc/yum.repos.d/docker-ce.repo
+    mode: '0640'
+  when: docker_download_repo_for_rhel
+
+- name: Add Docker repository
+  copy:
+    src: "{{ ansible_distribution }}/docker-ce.repo"
+    dest: /etc/yum.repos.d/docker-ce.repo
+    mode: '0640'
+  when: not docker_download_repo_for_rhel

@@ -1,0 +1,74 @@
+---
+
+- name: Install Docker on Debian based systems
+  include_tasks: deb.yml
+  when: ansible_distribution in ["Debian", "Ubuntu"]
+  tags: docker
+
+- name: Install Docker on RHEL based systems
+  include_tasks: rhel.yml
+  when: ansible_distribution in ["RedHat", "CentOS", "Fedora"]
+  tags: docker
+
+- name: Install Docker
+  package:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+  notify:
+    - reload systemd
+    - start docker
+
+- name: Create config directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  with_items:
+    - /etc/docker
+    - /etc/systemd/system/docker.service.d
+  tags: docker
+
+- name: Reconfigure Docker service to listen on port 2375
+  template:
+    src: etc/systemd/system/docker.service.d/hosts.conf.j2
+    dest: /etc/systemd/system/docker.service.d/hosts.conf
+  notify:
+    - reload systemd
+    - restart docker
+  tags: docker
+
+- name: Configure Docker daemon
+  template:
+    src: etc/docker/daemon.json.j2
+    dest: /etc/docker/daemon.json
+    owner: root
+    mode: '0644'
+  notify:
+    - restart docker
+  tags: docker
+
+- name: Start Docker service
+  service:
+    name: docker
+    state: started
+    enabled: yes
+  tags: docker
+
+- name: Add docker group
+  group:
+    name: docker
+  tags: docker
+
+- name: Add unprivileged users to docker group
+  user:
+    name: "{{ item }}"
+    groups: docker
+    append: yes
+  with_items: "{{ docker_allowed_users }}"
+  tags: docker
+
+# - name: Install Docker-Py
+#   pip: name=docker-py
+#   tags: docker

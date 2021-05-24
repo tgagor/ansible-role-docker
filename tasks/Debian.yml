@@ -1,0 +1,29 @@
+---
+
+- name: remove conflicting packages
+  apt:
+    name: "{{ docker_conflicting_packages }}"
+    state: absent
+
+- name: Install prerequisities
+  apt:
+    name: apt-transport-https
+
+- name: install Docker GPG key
+  apt_key:
+    url: https://download.docker.com/linux/{{ ansible_distribution | lower }}/gpg
+
+- name: add Docker repository
+  apt_repository:
+    repo: "deb [arch=amd64] https://download.docker.com/linux/{{ ansible_distribution | lower }} {{ ansible_lsb.codename }} stable"
+    filename: docker
+    update_cache: yes
+
+- name: Install Docker
+  apt:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+  notify:
+    - start docker

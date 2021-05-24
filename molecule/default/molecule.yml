@@ -1,0 +1,143 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+# lint: |
+#   set -e
+#   pre-commit run -a
+platforms:
+  - name: ubuntu-18.04
+    image: ubuntu:18.04
+    dockerfile: Dockerfile.j2
+    tmpfs:
+      - /run
+      - /tmp
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+    command: /bin/systemd --system
+
+  - name: ubuntu-20.04
+    image: ubuntu:20.04
+    dockerfile: Dockerfile.j2
+    tmpfs:
+      - /run
+      - /tmp
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+    command: /bin/systemd --system
+
+  - name: ubuntu-20.10
+    image: ubuntu:20.10
+    dockerfile: Dockerfile.j2
+    tmpfs:
+      - /run
+      - /tmp
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+    command: /bin/systemd --system
+
+  - name: ubuntu-21.04
+    image: ubuntu:21.04
+    dockerfile: Dockerfile.j2
+    tmpfs:
+      - /run
+      - /tmp
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+    command: /bin/systemd --system
+
+  # - name: debian-9
+  #   image: debian:stretch
+
+  - name: debian-10
+    image: debian:buster
+    dockerfile: Dockerfile.j2
+    tmpfs:
+      - /run
+      - /tmp
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+    command: /bin/systemd --system
+
+  - name: debian-11
+    image: debian:bullseye
+    dockerfile: Dockerfile.j2
+    tmpfs:
+      - /run
+      - /tmp
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+    command: /bin/systemd --system
+
+  - name: centos-7
+    image: centos:7
+    dockerfile: Dockerfile.j2
+    tmpfs:
+      - /run
+      - /tmp
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+    command: /usr/lib/systemd/systemd --system
+    # command: /usb/sbin/init
+
+  - name: centos-8
+    image: centos:8
+    dockerfile: Dockerfile.j2
+    tmpfs:
+      - /run
+      - /tmp
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+    command: /usr/lib/systemd/systemd --system
+    # command: /usb/sbin/init
+
+  - name: fedora-32
+    image: fedora:32
+    dockerfile: Dockerfile.j2
+    tmpfs:
+      - /run
+      - /tmp
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+    command: /usr/lib/systemd/systemd --system
+    # command: /usb/sbin/init
+
+  - name: fedora-33
+    image: fedora:33
+    dockerfile: Dockerfile.j2
+    tmpfs:
+      - /run
+      - /tmp
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+    command: /usr/lib/systemd/systemd --system
+    # command: /usb/sbin/init
+
+  - name: fedora-34
+    image: fedora:34
+    dockerfile: Dockerfile.j2
+    tmpfs:
+      - /run
+      - /tmp
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+    command: /usr/lib/systemd/systemd --system
+    # command: /usb/sbin/init
+provisioner:
+  name: ansible
+scenario:
+  name: default
+verifier:
+  name: testinfra
