@@ -1,8 +1,11 @@
-.PHONY: all clean create-venv requirements dependencies converge verify
+.PHONY: help all clean create-venv requirements dependencies converge verify
 
-all: create-venv
+help:				## Show this help
+	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
 
-.venv:
+all: create-venv test		## Default action
+
+.venv:		## Create virtual environment
 	( \
 		python3 -m venv .venv && \
 		. .venv/bin/activate && \
@@ -10,45 +13,37 @@ all: create-venv
 		python3 -m pip install --upgrade setuptools; \
 	)
 
-# .venv:
-# 	( \
-# 		virtualenv .venv && \
-# 		. .venv/bin/activate && \
-# 		python3 -m pip install --upgrade pip && \
-# 		python3 -m pip install --upgrade setuptools; \
-# 	)
-
-requirements: .venv
+requirements: .venv		## Install dependencies from requirements.txt
 	( \
 		. .venv/bin/activate && \
 		python3 -m pip install -r requirements.txt; \
 	)
 
-create-venv: requirements
+create-venv: requirements	## Create virtual environment
 	@echo "virtualenv ready."
 
-dependencies:
+dependencies:			## Install packages required for development
 	sudo apt install -y python3-pip libssl-dev libffi-dev git python3-venv
 
-converge:
+converge:			## Run molecule converge
 	( \
 		. .venv/bin/activate && \
 		molecule converge; \
 	)
 
-verify:
+verify:				## Run molecule verify
 	( \
 		. .venv/bin/activate && \
 		molecule verify; \
 	)
 
-test:
+test:				## Run molecule test
 	( \
 		. .venv/bin/activate && \
 		molecule test; \
 	)
 
-clean:
+clean:				## Remove all temporary files
 	( \
 		. .venv/bin/activate && \
 		molecule destroy; \
