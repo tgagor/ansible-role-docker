@@ -8,13 +8,6 @@
         update_cache: yes
       when: ansible_distribution in ["Debian", "Ubuntu"]
 
-    # - name: Update Yum cache
-    #   yum:
-    #     update_cache: yes
-    #   when: ansible_distribution in ["CentOS", "RedHat", "Fedora"]
-    #   retries: 3
-    #   delay: 5
-
     - name: Add test user
       user:
         name: dude
